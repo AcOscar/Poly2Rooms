@@ -1,11 +1,10 @@
 Option Explicit
-                    Type raum
-                         nummer As String ' Raumnummer
-                         abt As String ' Abteilung
-                         ref As String ' Referat
-                         sach As String ' Sachbearbeiter
-                    End Type
-
+Type raum
+     nummer As String ' Raumnummer
+     abt As String ' Abteilung
+     ref As String ' Referat
+     sach As String ' Sachbearbeiter
+End Type
 
 Sub alleareas()
 On Error Resume Next
@@ -143,7 +142,6 @@ Next ent1
 
 End Sub
 
-
 Sub Ausl()
   Dim AecDoc As AecDocument
   Dim Zaehler1 As Long, Zaehler2 As Long, Zaehler3 As Long
@@ -218,7 +216,6 @@ Sub allepolys()
         End If
     Next ent1
 End Sub
-
 
 Public Sub test()
   'On Error Resume Next
