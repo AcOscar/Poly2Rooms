@@ -145,44 +145,44 @@ End Sub
 
 
 Sub Ausl()
-Dim AecDoc As AecDocument
-Dim Zaehler1 As Long, Zaehler2 As Long, Zaehler3 As Long
-Dim aecObj As AecGeo
-Set AecDoc = AecArchBaseApplication.ActiveDocument
-For Zaehler1 = 0 To AecDoc.ModelSpace.Count - 1
-    If TypeName(AecDoc.ModelSpace.Item(Zaehler1)) = "IAecArea" Then
-        Set aecObj = ThisDrawing.ModelSpace(Zaehler1)
-        Dim SchedApp As AecScheduleApplication
-        Dim propSets As AecSchedulePropertySets
-        Dim propSet As AecSchedulePropertySet
-        Dim props As AecScheduleProperties
-        Set SchedApp = New AecScheduleApplication
-        Set propSets = SchedApp.PropertySets(aecObj)
-        Set propSet = propSets.Item(0)
-        Set props = propSet.Properties
-        Dim Data() As Variant
-        ReDim Data(props.Count, 1)
-        For Zaehler2 = 0 To props.Count - 1
-            On Error Resume Next
-            Data(Zaehler2, 1) = Null
-            Data(Zaehler2, 1) = props(Zaehler2).Value
-            Data(Zaehler2, 0) = props(Zaehler2).Name
-            Debug.Print props(Zaehler2).Name, props(Zaehler2).Value
-       
-        Next Zaehler2
-        Zaehler3 = Zaehler3 + 1
-    End If
-Next Zaehler1
-Set AecDoc = Nothing
-If Zaehler3 = 0 Then
-    MsgBox "Es sind keine Flächen in dieser Zeichnung definiert." & vbCrLf & _
-    "Die Funktion wird abgebrochen", vbOKOnly, "Keine definierten Flächen"
-    Exit Sub
-End If
-Set SchedApp = Nothing
-Set propSets = Nothing
-Set propSet = Nothing
-Set props = Nothing
+  Dim AecDoc As AecDocument
+  Dim Zaehler1 As Long, Zaehler2 As Long, Zaehler3 As Long
+  Dim aecObj As AecGeo
+  Set AecDoc = AecArchBaseApplication.ActiveDocument
+  For Zaehler1 = 0 To AecDoc.ModelSpace.Count - 1
+      If TypeName(AecDoc.ModelSpace.Item(Zaehler1)) = "IAecArea" Then
+          Set aecObj = ThisDrawing.ModelSpace(Zaehler1)
+          Dim SchedApp As AecScheduleApplication
+          Dim propSets As AecSchedulePropertySets
+          Dim propSet As AecSchedulePropertySet
+          Dim props As AecScheduleProperties
+          Set SchedApp = New AecScheduleApplication
+          Set propSets = SchedApp.PropertySets(aecObj)
+          Set propSet = propSets.Item(0)
+          Set props = propSet.Properties
+          Dim Data() As Variant
+          ReDim Data(props.Count, 1)
+          For Zaehler2 = 0 To props.Count - 1
+              On Error Resume Next
+              Data(Zaehler2, 1) = Null
+              Data(Zaehler2, 1) = props(Zaehler2).Value
+              Data(Zaehler2, 0) = props(Zaehler2).Name
+              Debug.Print props(Zaehler2).Name, props(Zaehler2).Value
+         
+          Next Zaehler2
+          Zaehler3 = Zaehler3 + 1
+      End If
+  Next Zaehler1
+  Set AecDoc = Nothing
+  If Zaehler3 = 0 Then
+      MsgBox "Es sind keine Flächen in dieser Zeichnung definiert." & vbCrLf & _
+      "Die Funktion wird abgebrochen", vbOKOnly, "Keine definierten Flächen"
+      Exit Sub
+  End If
+  Set SchedApp = Nothing
+  Set propSets = Nothing
+  Set propSet = Nothing
+  Set props = Nothing
 End Sub
 
 Sub allepolys()
@@ -221,61 +221,61 @@ End Sub
 
 
 Public Sub test()
-'On Error Resume Next
-Dim doc As AecBaseDocument
-Dim app As New AecBaseApplication
-Dim cRings As AecRings
-Dim ring1 As AecRing
-Dim ring2 As AecRing
-Dim cProfileStyles As AecProfileStyles
-Dim profileStyle As AecProfileStyle
-Dim profile As AecProfile
-Dim ent As AcadEntity
-Dim pts1 As Variant
-Dim point As AcadPoint
-Dim pt As Variant
-Dim poly As AcadLWPolyline
-Dim oldpoly As AcadPolyline
-Dim pts(0 To 3) As Double
-Dim i As Integer
-
-Set cRings = profile.Rings
-ThisDrawing.Utility.GetEntity ent, pt, "Select polyline"
-If TypeOf ent Is AcadLWPolyline Then
-app.Init ThisDrawing.Application
-Set doc = app.ActiveDocument
-
-Set cProfileStyles = doc.ProfileStyles
-Set profileStyle = cProfileStyles.Item("ringTestProfile")
-If profileStyle Is Nothing Then
-Set profileStyle = cProfileStyles.Add("ringTestProfile")
-End If
-Set profile = profileStyle.profile
-Set poly = ent
-Set oldpoly = ConvertPoly(poly)
-Set ring1 = profile.Rings.Add
-pts1 = poly.Coordinates
-ring1.FromPolyline oldpoly
-
-For Each ent In ThisDrawing.ModelSpace
-If TypeOf ent Is AcadPoint Then
-Set point = ent
-
-pts(0) = point.Coordinates(0): pts(1) = point.Coordinates(1)
-pts(2) = point.Coordinates(0): pts(3) = point.Coordinates(1) + 0.000001
-Set ring2 = profile.Rings.Add
-ring2.FromPoints pts
-
-If ring1.Contains(ring2) = True Then
-point.color = acRed
-Else
-point.color = acBlue
-End If
-End If
-Next
-End If
-oldpoly.Delete
-profileStyle.Delete
+  'On Error Resume Next
+  Dim doc As AecBaseDocument
+  Dim app As New AecBaseApplication
+  Dim cRings As AecRings
+  Dim ring1 As AecRing
+  Dim ring2 As AecRing
+  Dim cProfileStyles As AecProfileStyles
+  Dim profileStyle As AecProfileStyle
+  Dim profile As AecProfile
+  Dim ent As AcadEntity
+  Dim pts1 As Variant
+  Dim point As AcadPoint
+  Dim pt As Variant
+  Dim poly As AcadLWPolyline
+  Dim oldpoly As AcadPolyline
+  Dim pts(0 To 3) As Double
+  Dim i As Integer
+  
+  Set cRings = profile.Rings
+  ThisDrawing.Utility.GetEntity ent, pt, "Select polyline"
+  If TypeOf ent Is AcadLWPolyline Then
+    app.Init ThisDrawing.Application
+    Set doc = app.ActiveDocument
+  
+    Set cProfileStyles = doc.ProfileStyles
+    Set profileStyle = cProfileStyles.Item("ringTestProfile")
+    If profileStyle Is Nothing Then
+      Set profileStyle = cProfileStyles.Add("ringTestProfile")
+    End If
+    Set profile = profileStyle.profile
+    Set poly = ent
+    Set oldpoly = ConvertPoly(poly)
+    Set ring1 = profile.Rings.Add
+    pts1 = poly.Coordinates
+    ring1.FromPolyline oldpoly
+    
+    For Each ent In ThisDrawing.ModelSpace
+      If TypeOf ent Is AcadPoint Then
+        Set point = ent
+        
+        pts(0) = point.Coordinates(0): pts(1) = point.Coordinates(1)
+        pts(2) = point.Coordinates(0): pts(3) = point.Coordinates(1) + 0.000001
+        Set ring2 = profile.Rings.Add
+        ring2.FromPoints pts
+        
+        If ring1.Contains(ring2) = True Then
+          point.color = acRed
+        Else
+          point.color = acBlue
+        End If
+      End If
+    Next
+  End If
+  oldpoly.Delete
+  profileStyle.Delete
 
 End Sub
 
